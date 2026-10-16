@@ -1,0 +1,5 @@
+python-can>=4.3
+cantools>=39.0
+pytest>=8.0
+can-isotp>=2.0
+udsoncan>=1.21
