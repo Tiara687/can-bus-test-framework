@@ -35,8 +35,8 @@ class BcmSimulator:
     def _loop(self):
         msg_def = self.db.get_message_by_frame_id(BODY_STATUS_ID)
         while not self._stop.is_set():
-            # strict=True：让 cantools 校验信号值是否超出 DBC 定义范围。
-            # 若关闭，越界值会被静默编上总线（风险见 test_signal_boundary.py）。
+            # strict=True：让 cantools 校验信号值是否超出 DBC 定义范围
+            # 若关闭，越界值会被静默编上总线（风险见 test_signal_boundary.py）
             data = msg_def.encode(self.state, strict=True)
             self.bus.send(
                  can.Message(

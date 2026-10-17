@@ -41,7 +41,7 @@ class UdsServer(threading.Thread):
             return bytes([0x7F,sid,0x11])
 
     def stop(self):
-        """停止后台线程，让 run() 里的 while 循环退出。"""
+        """停止后台线程，让 run() 里的 while 循环退出"""
         self.running = False
         self.join(timeout=2.0)
         self.bus.shutdown() 

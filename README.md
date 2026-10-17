@@ -1,6 +1,6 @@
 # can-bus-test-framework
 
-**基于 Python + pytest 的车载 CAN 总线自动化测试框架。**
+**基于 Python + pytest 的车载 CAN 总线自动化测试框架**
 
 在没有真实 ECU 和 CAN 硬件的条件下，用虚拟总线搭建出一套可运行的总线测试环境：
 自己实现一个车身控制器（BCM）节点周期发送报文，再对其**报文周期、信号取值、丢帧率、UDS 诊断服务**

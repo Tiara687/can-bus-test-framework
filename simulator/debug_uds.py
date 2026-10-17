@@ -1,11 +1,11 @@
 """
-UDS 手动调试脚本：不经过 pytest，直接把每一次诊断请求/响应的原始字节打出来。
+UDS 手动调试脚本：不经过 pytest，直接把每一次诊断请求/响应的原始字节打出来
 
 用法（必须在项目根目录跑）：
     python simulator/debug_uds.py
 
 它做的事：手动启动 ECU 服务端 → 建一个诊断客户端 → 发 4 个请求 → 把每一次
-请求/响应打印出来。不用 pytest，一眼就能看到总线上到底跑的是什么字节。
+请求/响应打印出来。不用 pytest，一眼就能看到总线上到底跑的是什么字节
 """
 import sys, time
 from pathlib import Path

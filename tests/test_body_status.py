@@ -1,4 +1,4 @@
-"""车身状态报文（0x100）的基础用例：虚拟总线收发 + DBC 编解码 + 枚举值映射。"""
+"""车身状态报文（0x100）的基础用例：虚拟总线收发 + DBC 编解码 + 枚举值映射"""
 import can
 import pytest
 
@@ -7,7 +7,7 @@ BODY_STATUS_ID = 0x100
 
 
 def test_bus_can_deliver_message(dut_bus, bus):
-    """用例 1：总线上能收到指定 ID 的报文（最基础的通信链路验证）。"""
+    """用例 1：总线上能收到指定 ID 的报文（最基础的通信链路验证）"""
     dut_bus.send(
         can.Message(arbitration_id=BODY_STATUS_ID, data=b"\x00" * 8, is_extended_id=False)
     )
@@ -17,7 +17,7 @@ def test_bus_can_deliver_message(dut_bus, bus):
 
 
 def test_encode_and_decode_speed(dbc):
-    """用例 2：DBC 编码后再解码，车速信号值能还原。"""
+    """用例 2：DBC 编码后再解码，车速信号值能还原"""
     msg_def = dbc.get_message_by_frame_id(BODY_STATUS_ID)
     data = msg_def.encode(
         {
@@ -35,7 +35,7 @@ def test_encode_and_decode_speed(dbc):
 
 @pytest.mark.parametrize("door_value,expected", [(0, "Closed"), (1, "Open")])
 def test_door_signal_choices(dbc, door_value, expected):
-    """用例 3（parametrize 演示）：车门信号的枚举值映射是否正确。"""
+    """用例 3（parametrize 演示）：车门信号的枚举值映射是否正确"""
     msg_def = dbc.get_message_by_frame_id(BODY_STATUS_ID)
     data = msg_def.encode(
         {

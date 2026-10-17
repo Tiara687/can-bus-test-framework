@@ -1,4 +1,4 @@
-"""车速信号的等价类划分 + 边界值分析。
+"""车速信号的等价类划分 + 边界值分析
 
 DBC 里 VehicleSpeed 定义范围是 0~400（factor=0.1）：
 
@@ -44,7 +44,7 @@ def test_invalid_speed_should_be_rejected(dbc, speed):
 
 
 def test_out_of_range_value_leaks_when_strict_disabled(dbc):
-    """strict=False 时 cantools 不校验 DBC 范围，越界值会被编上总线。
+    """strict=False 时 cantools 不校验 DBC 范围，越界值会被编上总线
 
     这条用例把风险固化下来：谁关掉严格模式，它立刻变红。
     """

@@ -12,7 +12,7 @@
 
 注意：客户端 config 里必须声明用到的 DID，且设置
 exception_on_negative_response=False，否则否定响应会直接抛异常，
-拿不到 resp.positive 供断言。
+拿不到 resp.positive 供断言
 """
 
 
@@ -24,9 +24,9 @@ def test_change_session_should_succeed(uds_server, uds_client):
 
 
 def test_read_vin_should_return_vin(uds_server, uds_client):
-    """0x22 读 VIN（DID 0xF190）。
+    """0x22 读 VIN（DID 0xF190）
 
-    resp.data 前两字节是 DID 本身（F1 90），真正的 VIN 从第 3 字节开始。
+    resp.data 前两字节是 DID 本身（F1 90），真正的 VIN 从第 3 字节开始
     """
     resp = uds_client.read_data_by_identifier(0xF190)
     assert resp.positive, f"读 VIN 失败，否定码 {resp.code_name}"
@@ -34,7 +34,7 @@ def test_read_vin_should_return_vin(uds_server, uds_client):
 
 
 def test_read_dtc_should_return_one_fault(uds_server, uds_client):
-    """0x19 按状态掩码读 DTC，服务端返回 1 条故障（P0001，状态 0x2F）。"""
+    """0x19 按状态掩码读 DTC，服务端返回 1 条故障（P0001，状态 0x2F）"""
     resp = uds_client.get_dtc_by_status_mask(0xFF)
     assert resp.positive, f"读 DTC 失败，否定码 {resp.code_name}"
     assert resp.service_data.dtc_count == 1
@@ -42,7 +42,7 @@ def test_read_dtc_should_return_one_fault(uds_server, uds_client):
 
 
 def test_unsupported_did_should_be_rejected(uds_server, uds_client):
-    """读取服务端不认识的 DID（0xF191），应返回否定响应 7F 22 31。"""
+    """读取服务端不认识的 DID（0xF191），应返回否定响应 7F 22 31"""
     resp = uds_client.read_data_by_identifier(0xF191)
     assert not resp.positive
     assert resp.code == 0x31      # requestOutOfRange

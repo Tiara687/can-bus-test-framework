@@ -1,4 +1,4 @@
-"""pytest 共享 fixture：把"测试要用到的资源"统一在这里准备好。"""
+"""pytest 共享 fixture：把"测试要用到的资源"统一在这里准备好"""
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -19,7 +19,7 @@ DBC_PATH = Path(__file__).parent / "dbc" / "body_control.dbc"
 
 @pytest.fixture
 def dut_bus():
-    """模拟被测节点（BCM）用的总线。"""
+    """模拟被测节点（BCM）用的总线"""
     bus = can.Bus(interface="virtual", channel=CAN_CHANNEL)
     yield bus          # yield 之后的代码在测试结束后才执行
     bus.shutdown()     # 不关会在测试结束时报 "was not properly shut down"
@@ -27,7 +27,7 @@ def dut_bus():
 
 @pytest.fixture
 def bus():
-    """模拟测试仪（Tester）用的总线。和 dut_bus 连同一个通道才能互相收发。"""
+    """模拟测试仪（Tester）用的总线。和 dut_bus 连同一个通道才能互相收发"""
     bus = can.Bus(interface="virtual", channel=CAN_CHANNEL)
     yield bus
     bus.shutdown()
@@ -35,7 +35,7 @@ def bus():
 
 @pytest.fixture(scope="session")
 def dbc():
-    """加载 DBC 数据库，整个测试会话只加载一次。"""
+    """加载 DBC 数据库，整个测试会话只加载一次"""
     return cantools.database.load_file(DBC_PATH)
 
 @pytest.fixture(scope="session")
@@ -43,7 +43,7 @@ def bcm():
     """后台运行的车身控制器模拟器，session 级：整个测试期间持续周期发报文。
 
     注意：用例只要把 bcm 写进参数，模拟器就会启动；不写则不会启动，
-    bus.recv() 会直接超时。
+    bus.recv() 会直接超时
     """
     sim = BcmSimulator()
     sim.start()
@@ -52,7 +52,7 @@ def bcm():
 
 @pytest.fixture(scope="session")
 def uds_server():
-    """模拟 ECU 的 UDS 服务端（独立线程，跑在 uds0 通道上）。"""
+    """模拟 ECU 的 UDS 服务端（独立线程，跑在 uds0 通道上）"""
     from simulator.uds_server import UdsServer
     srv = UdsServer()
     srv.start()
@@ -61,7 +61,7 @@ def uds_server():
 
 @pytest.fixture
 def uds_client():
-    """诊断仪（Tester）客户端，走 ISO-TP 与 uds_server 通信。"""
+    """诊断仪（Tester）客户端，走 ISO-TP 与 uds_server 通信"""
     from udsoncan.client import Client
     from udsoncan.connections import PythonIsoTpConnection
 
