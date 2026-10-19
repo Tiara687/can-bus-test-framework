@@ -42,15 +42,11 @@ BO_ 256 BodyStatus: 8 BCM
  SG_ LowBeam : 34|1@1+ (1,0) [0|1] "" TESTER
  SG_ HighBeam : 35|1@1+ (1,0) [0|1] "" TESTER
 
-BO_ 512 DoorStatus: 8 BCM
- SG_ DoorOpenCount : 0|8@1+ (1,0) [0|255] "" TESTER
-
 CM_ BO_ 256 "Body status, sent by BCM every 100ms";
 CM_ SG_ 256 VehicleSpeed "Vehicle speed from ABS, scale 0.1";
 BA_DEF_ BO_ "GenMsgCycleTime" INT 0 10000;
 BA_DEF_DEF_ "GenMsgCycleTime" 100;
 BA_ "GenMsgCycleTime" BO_ 256 100;
-BA_ "GenMsgCycleTime" BO_ 512 200;
 VAL_ 256 DriverDoor 0 "Closed" 1 "Open";
 VAL_ 256 PassengerDoor 0 "Closed" 1 "Open";
 VAL_ 256 LowBeam 0 "Off" 1 "On";
