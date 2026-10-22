@@ -55,7 +55,7 @@ can-bus-test-framework/
 |---|---|---|
 | `test_body_status.py` | `test_bus_can_deliver_message` | 总线链路：发出 0x100，对端 1 秒内应收到的 ID 一致 |
 | | `test_encode_and_decode_speed` | DBC 编解码往返：车速 60.0 编码后解码，值不变 |
-| | `test_door_signal_choices`（参数化 2 条） | 枚举信号：`decode_choices=False` 时车门值应为 0/1 而非字符串 |
+| | `test_door_signal_choices`（参数化 2 条） | 枚举信号：车门值 0/1 能还原，且映射到 DBC 中定义的 Closed / Open |
 | `test_signal_decode.py` | `test_decode_vehicle_speed` | 信号链路：车速 60.0 编码上总线后解码回仍为 60.0 |
 | `test_cycle_time.py` | `test_body_status_cycle_time` | **周期抖动**：收 10 帧，相邻间隔须落在 90~110ms（100ms ±10%） |
 | `test_frame_loss.py` | `test_frame_loss` | **丢帧统计**：2 秒窗内应收 20 帧，实测丢帧率须 ≤ 10% |
@@ -86,8 +86,6 @@ can-bus-test-framework/
 - **丢帧统计**：固定时间窗内应收与实际收到的报文数对比
 - **UDS 诊断**：0x10 会话控制、0x22 读 DID、0x19 读 DTC，以及否定响应验证
 
-未覆盖（列入后续方向）：总线负载率、网络管理休眠唤醒、错误帧 / BusOff 注入。
-
 ## 两条工程约定
 
 **1. 每条用例都做过反面验证。** 要证明用例真的在测东西，而不是"永远绿"的空壳——
@@ -100,6 +98,6 @@ can-bus-test-framework/
 
 ## 已知边界（后续可扩展方向）
 
-- 未覆盖：BusOff / 错误帧注入、网络管理休眠唤醒、CAN FD、LIN 总线
-- 日志分析方向：曾尝试扩展 candump / ASC 日志解析工具，因工期取舍暂未并入本仓库
+- 未覆盖：总线负载率、BusOff / 错误帧注入、网络管理休眠唤醒、CAN FD、LIN 总线
+- 日志分析方向：扩展 candump / ASC 日志解析工具
 - 当前运行在虚拟总线上，未接入真实收发器（如 CANable + candleLight）

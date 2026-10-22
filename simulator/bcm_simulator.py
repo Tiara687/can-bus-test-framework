@@ -24,12 +24,12 @@ class BcmSimulator:
 
     def start(self):
         self._thread = Thread(target=self._loop, daemon=True)
-        self._thread.start()#
+        self._thread.start()
 
     def stop(self):
         self._stop.set()
         if self._thread:
-            self._thread.join(timeout=2.0)#
+            self._thread.join(timeout=2.0)
         self.bus.shutdown()
 
     def _loop(self):

@@ -54,7 +54,7 @@ def bcm():
 def uds_server():
     """模拟 ECU 的 UDS 服务端（独立线程，跑在 uds0 通道上）"""
     from simulator.uds_server import UdsServer
-    srv = UdsServer()
+    srv = UdsServer(channel=UDS_CHANNEL)
     srv.start()
     yield srv
     srv.stop()
