@@ -1,10 +1,3 @@
-"""总线监听小工具：启动 BCM 模拟器，把收到的前 5 条报文和相邻间隔打出来
-
-用例失败时先跑它，能立刻区分"模拟器没在发"还是"用例自己写错了"
-
-用法（必须在项目根目录）：
-    python simulator/debug_receive.py
-"""
 import sys
 from pathlib import Path
 
@@ -29,7 +22,7 @@ def main():
         while count < 5:
             msg = listener.recv(timeout=2.0)
             if msg is None:
-                print("2 秒内没收到东西 —— 模拟器没在发！")
+                print("2 秒内没收到东西 —— 模拟器没在发")
                 break
             count += 1
             timestamps.append(msg.timestamp)

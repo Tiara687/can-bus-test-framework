@@ -22,7 +22,7 @@ def dut_bus():
     """模拟被测节点（BCM）用的总线"""
     bus = can.Bus(interface="virtual", channel=CAN_CHANNEL)
     yield bus          # yield 之后的代码在测试结束后才执行
-    bus.shutdown()     # 不关会在测试结束时报 "was not properly shut down"
+    bus.shutdown()     # 不关会在测试结束时报 "was not properly shut down"表示总线资源没回收干净
 
 
 @pytest.fixture
@@ -71,7 +71,7 @@ def uds_client():
 
     config = dict(udsoncan.configs.default_client_config)
     config["data_identifiers"] = {
-        0xF190: udsoncan.AsciiCodec(13),   # VIN
+        0xF190: udsoncan.AsciiCodec(13),   
         0xF191: udsoncan.AsciiCodec(5),    # 服务端不认这个 DID，用于验证否定响应
     }
     config["request_timeout"] = 3

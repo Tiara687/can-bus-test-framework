@@ -1,14 +1,4 @@
-"""UDS 诊断服务测试（ISO 14229 / ISO-TP）。
-
-请求与正响应的对应关系：
-
-    0x10 会话控制   10 03        → 50 03 00 32 01 F4
-    0x22 读 DID     22 F1 90     → 62 F1 90 <13字节VIN>
-    0x19 读 DTC     19 02 FF     → 59 02 <可用性掩码> <DTC记录...>
-
-否定响应统一格式：7F <服务ID> <否定码>
-    0x11 serviceNotSupported      服务不支持
-    0x31 requestOutOfRange        请求参数超范围（本文件用它验证未知 DID）
+"""UDS 诊断服务测试（ISO 14229 / ISO-TP）
 
 注意：客户端 config 里必须声明用到的 DID，且设置
 exception_on_negative_response=False，否则否定响应会直接抛异常，
@@ -24,10 +14,7 @@ def test_change_session_should_succeed(uds_server, uds_client):
 
 
 def test_read_vin_should_return_vin(uds_server, uds_client):
-    """0x22 读 VIN（DID 0xF190）
-
-    resp.data 前两字节是 DID 本身（F1 90），真正的 VIN 从第 3 字节开始
-    """
+    """0x22 读 VIN（DID 0xF190）"""
     resp = uds_client.read_data_by_identifier(0xF190)
     assert resp.positive, f"读 VIN 失败，否定码 {resp.code_name}"
     assert resp.data[2:].decode("ascii") == "VIN1234567890"

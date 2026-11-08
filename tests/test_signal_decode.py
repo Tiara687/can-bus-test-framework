@@ -1,15 +1,11 @@
 """验证信号链路：物理值经 DBC 编码上总线、再解回来后必须保持一致
 
-比链路用例更进一步——链路只证明"线是通的"，这条证明"信号值是对的"
-
-三个坑（都验证过）：
+此处有三个重点：
 1. encode 必须把 6 个信号全给齐，少一个报 EncodeError: The signal "..." is required
 2. 浮点不能用 == 比较（0.1 精度问题），用 pytest.approx
 3. decode 默认返回枚举字符串（如 'Open'），要数字需 decode_choices=False
 
-车速在 DBC 里 factor=0.1，所以总线上传的是 600，解回来才是 60.0 km/h。
-统一显式传 strict=True：strict=False 时会跳过 DBC 范围校验，越界值会直接上总线
-（相关风险固化见 test_signal_boundary.py）。
+车速在 DBC 里 factor=0.1，所以总线上传的是 600，解回来才是 60.0 km/h
 """
 import can
 import pytest

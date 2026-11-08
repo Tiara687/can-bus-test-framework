@@ -5,7 +5,7 @@
 阈值不能写成 0 容差，操作系统调度本身就有毫秒级抖动，
 卡太死这个用例会一会红一会绿
 
-反面验证：把 bcm_simulator 的 cycle_seconds 改成 0.15，本用例必须变红
+反面验证：把 bcm_simulator 的 cycle_seconds 改成 0.15，该用例必须变红
 """
 import pytest
 

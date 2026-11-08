@@ -16,7 +16,7 @@ class UdsServer(threading.Thread):
     def run(self):
         while self.running:
             self.stack.process()
-            if self.stack.available():        # 先问"有没有收完整一帧"
+            if self.stack.available():        # 先确认有没有收完整一帧
                 payload = self.stack.recv()   # 再取出来存进变量
                 resp = self.handle(payload)
                 if self.verbose:
@@ -27,9 +27,14 @@ class UdsServer(threading.Thread):
     def handle(self,payload):
         sid = payload[0]
         if sid == 0x10:
-            return bytes([0x50,0x03,0x00,0x32,0x01,0xF4])
+            if len(payload) < 2:
+                return bytes([0x7F,0x10,0x13])
+            sub = payload[1] & 0x7F
+            if sub in (0x01,0x02,0x03):
+                return bytes([0x50,sub,0x00,0x32,0x01,0xF4])
+            return bytes([0x7F,0x10,0x12])
         elif sid == 0x22:
-            did_high = payload[1]      # DID 是两个字节，0xF190 里 F1 是高字节
+            did_high = payload[1]      
             did_low = payload[2]
             if did_high == 0xF1 and did_low == 0x90:
                 return bytes([0x62,0xF1,0x90]) + b"VIN1234567890"
